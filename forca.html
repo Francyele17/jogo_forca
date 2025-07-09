@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Jogo da Forca</title>
+  <script>
+    let continuar = true;
+
+    const palavras = [
+      "francyele", "liquidificador", "escola", "geladeira", "conjunto",
+      "estante", "impressora", "pipoca", "biscoito", "numero",
+      "onibus", "tapete", "crente", "igreja", "sapato",
+      "cozinha", "banheiro", "xicara", "agua", "garrafa", "irma", "bota", "galinha",
+      "mesa", "cadeira", "grampeador", "folha", "mangueira", "morango", "maca", "italo", 
+      "uva", "laranja", "cinza", "vermelho", "amarelo", "roxo", "lilas", "suco", "luz",
+      "gelo", "porta", "pe", "cabeca", "notebook", "jogo", "carregador", "tampa", "botoes", "celular"
+    ];
+
+    while (continuar) {
+let palavraSecreta = palavras[Math.floor(Math.random() * palavras.length)];
+  let letrasDescobertas = [];
+  for (let i = 0; i < palavraSecreta.length; i++) {
+    letrasDescobertas.push("_");
+  }
+
+  let tentativas = 0;
+  let letrasErradas = [];
+
+  while (tentativas < 8) {
+    let completa = true;
+    for (let i = 0; i < letrasDescobertas.length; i++) {
+      if (letrasDescobertas[i] === "_") {
+        completa = false;
+      }
+    }
+    if (completa) {
+      break;
+    }
+
+    let letra = prompt("Palavra: " + letrasDescobertas.join(" ") +
+                       "\nErros: " + tentativas +
+                       "\nLetras erradas: " + letrasErradas.join(", ") +
+                       "\nDigite uma letra:");
+
+    if (letra === null || letra.length !== 1) {
+      alert("Digite apenas uma letra.");
+      continue;
+    }
+
+    let jaUsou = false;
+    for (let i = 0; i < letrasDescobertas.length; i++) {
+      if (letrasDescobertas[i] === letra) {
+        jaUsou = true;
+      }
+    }
+    for (let i = 0; i < letrasErradas.length; i++) {
+      if (letrasErradas[i] === letra) {
+        jaUsou = true;
+      }
+    }
+
+    if (jaUsou) {
+      alert("Você já tentou essa letra.");
+      continue;
+    }
+
+    let acertou = false;
+    for (let i = 0; i < palavraSecreta.length; i++) {
+      if (palavraSecreta[i] === letra) {
+        letrasDescobertas[i] = letra;
+        acertou = true;
+      }
+    }
+
+    if (!acertou) {
+      tentativas = tentativas + 1;
+      letrasErradas.push(letra);
+    }
+  }
+
+  if (tentativas >= 8) {
+    alert("Você perdeu! A palavra era: " + palavraSecreta);
+  } else {
+    alert("Parabéns! Você acertou a palavra: " + palavraSecreta);
+  }
+
+      let resposta = prompt("Deseja jogar novamente? (sim ou não)").toLowerCase();
+      if (resposta !== "sim") {
+        continuar = false;
+        alert("Jogo encerrado!");
+      }
+    }
+  </script>
+</head>
+<body>
+</body>
+</html>
